@@ -1,19 +1,19 @@
 {
-  "name": "express-auto-asset",
+  "name": "express-auto-server",
   "version": "0.0.1",
-  "description": "express auto asset",
+  "description": "express auto server",
   "main": "index.js",
   "scripts": {
     "test": "node ./sample/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xiewulong/express-auto-asset.git"
+    "url": "git+https://github.com/xiewulong/express-auto-server.git"
   },
   "keywords": [
     "express",
     "auto",
-    "asset"
+    "server"
   ],
   "author": {
     "name": "xiewulong",
@@ -21,9 +21,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xiewulong/express-auto-asset/issues"
+    "url": "https://github.com/xiewulong/express-auto-server/issues"
   },
-  "homepage": "https://github.com/xiewulong/express-auto-asset#readme",
+  "homepage": "https://github.com/xiewulong/express-auto-server#readme",
   "dependencies": {
     "express": "^4.15.2",
     "express-auto-controller": "^0.0.2",
