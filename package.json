@@ -4,7 +4,7 @@
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
-    "test": "node ./sample/app.js"
+    "test": "node ./sample/apps/foo"
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,13 @@
   },
   "homepage": "https://github.com/xiewulong/express-auto-server#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
     "express-auto-controller": "^0.0.2",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "pm2": "^2.4.4",
+    "pug": "^2.0.0-beta11",
+    "serve-favicon": "^2.4.2"
   }
 }
