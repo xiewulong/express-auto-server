@@ -7,5 +7,11 @@
 'use strict';
 
 module.exports = {
+	jsonServer: {
+		path: '',
+		rewrites: {
+
+		},
+	},
 	port: 30001,
 };

@@ -12,5 +12,12 @@
 // }, require('./app.local'));
 
 module.exports = {
+	jsonServer: {
+		path: 'dbs',
+		route: '/api',
+		routes: {
+			'/member': '/user',
+		},
+	},
 	port: 30001,
 };
