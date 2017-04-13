@@ -100,28 +100,39 @@ application.prototype = {
 			return;
 		}
 
-		if(!this.config.jsonServer.path || !this.config.jsonServer.route) {
-			console.error('json-server: path or route is undefined, skipped!');
-
-			return;
+		if(this.config.jsonServer === true) {
+			this.config.jsonServer = 'db';
 		}
 
-		if(this.config.jsonServer.routes) {
-			this.app.use(this.config.jsonServer.route, jsonServer.rewriter(this.config.jsonServer.routes));
+		let dbPath = path.join(this.config.path, this.config.jsonServer);
+		let db = require(dbPath);
+		if(!db.route) {
+			db.route = '/api';
 		}
 
-		let dir = path.resolve(this.config.path, this.config.jsonServer.path);
-		fs.readdirSync(dir).map((file) => {
-			let ext = path.extname(file);
+		if(db.routes) {
+			this.app.use(db.route, jsonServer.rewriter(db.routes));
+		}
 
-			if(ext == '.json') {
-				this.app.use(this.config.jsonServer.route, jsonServer.router(path.join(dir, file)));
+		let dbStat = fs.statSync(dbPath);
+		if(!dbStat.isDirectory()) {
+			dbPath = path.dirname(dbPath);
+		}
+
+		let tables = db.tables;
+		if(db.json) {
+			if(db.json === true) {
+				db.json = 'db.json';
 			}
 
-			if(ext == '.js') {
-				this.app.use(this.config.jsonServer.route, jsonServer.router(path.join(dir, file)));
+			let jsonPath = path.join(dbPath, db.json);
+			if(!fs.existsSync(jsonPath)) {
+				fs.writeFileSync(jsonPath, JSON.stringify(tables));
+				tables = jsonPath;
 			}
-		});
+		}
+
+		this.app.use(db.route, jsonServer.router(tables));
 	},
 
 	setController() {
