@@ -128,8 +128,9 @@ application.prototype = {
 			let jsonPath = path.join(dbPath, db.json);
 			if(!fs.existsSync(jsonPath)) {
 				fs.writeFileSync(jsonPath, JSON.stringify(tables));
-				tables = jsonPath;
 			}
+
+			tables = jsonPath;
 		}
 
 		this.app.use(db.route, jsonServer.router(tables));

@@ -9,7 +9,7 @@
 const faker = require('faker/locale/zh_CN');
 
 let rows = [];
-for(let i = 0, len = 1000; i < len; i++) {
+for(let i = 0, len = 10; i < len; i++) {
 	rows.push({
 		id: i + 1,
 		name: faker.internet.userName(),
