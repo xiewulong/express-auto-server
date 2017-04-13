@@ -6,4 +6,11 @@
  */
 'use strict';
 
-module.exports = require('./app');
+const path = require('path');
+
+module.exports = Object.assign(
+	require('./app')
+	, {
+		common: path.dirname(__dirname),
+	}
+);

@@ -41,6 +41,7 @@ const application = function(config) {
 application.prototype = {
 
 	init() {
+		this.setAliases();
 		this.setLocals();
 		this.setViews();
 		this.setJsonSpaces();
@@ -54,7 +55,31 @@ application.prototype = {
 		this.listen();
 	},
 
+	setAliases() {
+		this.app.locals.aliases = {};
+		this.app.alias = (name, _path) => {
+			if(_path) {
+				this.app.locals.aliases[name] = _path;
+				return;
+			}
+
+			if(name.indexOf('@')) {
+				return name;
+			}
+
+			let sepPos = name.indexOf(path.sep);
+			let _name = sepPos == -1 ? name : name.slice(0, sepPos);
+
+			return name.replace(_name, this.app.locals.aliases[_name]);
+		};
+	},
+
 	setLocals() {
+		this.app.alias('@app', this.config.path);
+		if(this.config.common) {
+			this.app.alias('@common', this.config.common);
+		}
+
 		this.app.locals.minAsset = this.config.env === 'production' ? '.min' : '';
 	},
 
@@ -101,10 +126,10 @@ application.prototype = {
 		}
 
 		if(this.config.jsonServer === true) {
-			this.config.jsonServer = 'db';
+			this.config.jsonServer = path.join('@app', 'db');
 		}
 
-		let dbPath = path.join(this.config.path, this.config.jsonServer);
+		let dbPath = this.app.alias(this.config.jsonServer);
 		let db = require(dbPath);
 		if(!db.route) {
 			db.route = '/api';

@@ -6,11 +6,15 @@
  */
 'use strict';
 
-// module.exports = Object.assign({
-// 	static: 'dist',
-// }, require('./app.local'));
+// module.exports = Object.assign(
+// 	{
+// 		static: 'dist',
+// 	}
+// 	, require('./app.local')
+// );
 
 module.exports = {
 	env: 'development',
+	jsonServer: path.join('@common', 'db'),
 	static: 'dist',
 };

@@ -6,12 +6,11 @@
  */
 'use strict';
 
-// module.exports = Object.assign({
-// 	port: 30003,
-// 	static: 'dist',
-// }, require('./app.local'));
+// module.exports = Object.assign(
+// 	{}
+// 	, require('./app.local')
+// );
 
 module.exports = {
-	jsonServer: true,
 	port: 30001,
 };

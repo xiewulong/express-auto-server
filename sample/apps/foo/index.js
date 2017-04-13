@@ -8,7 +8,7 @@
 
 const expressAutoServer = require('../../../');
 
-const config = require('./config');
+let config = Object.assign(require('../../common/config'), require('./config'));
 config.path = __dirname;
 
 expressAutoServer(config);

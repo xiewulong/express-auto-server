@@ -6,8 +6,10 @@
  */
 'use strict';
 
-// module.exports = Object.assign({
-// }, require('./app.local'));
+// module.exports = Object.assign(
+// 	{}
+// 	, require('./app.local')
+// );
 
 module.exports = {
 	port: 30002,
