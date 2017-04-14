@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jsonServer = require('json-server');
 const logger = require('morgan');
+const peppa = require('peppa');
 const favicon = require('serve-favicon');
 const express = require('express');
 const autoController = require('express-auto-controller');
@@ -56,22 +57,23 @@ application.prototype = {
 	},
 
 	setAliases() {
-		this.app.locals.aliases = {};
-		this.app.alias = (name, _path) => {
-			if(_path) {
-				this.app.locals.aliases[name] = _path;
-				return;
-			}
+		this.app.alias = peppa.alias();
+		// this.app.locals.aliases = {};
+		// this.app.alias = (name, _path) => {
+		// 	if(_path) {
+		// 		this.app.locals.aliases[name] = _path;
+		// 		return;
+		// 	}
 
-			if(name.indexOf('@')) {
-				return name;
-			}
+		// 	if(name.indexOf('@')) {
+		// 		return name;
+		// 	}
 
-			let sepPos = name.indexOf(path.sep);
-			let _name = sepPos == -1 ? name : name.slice(0, sepPos);
+		// 	let sepPos = name.indexOf(path.sep);
+		// 	let _name = sepPos == -1 ? name : name.slice(0, sepPos);
 
-			return name.replace(_name, this.app.locals.aliases[_name]);
-		};
+		// 	return name.replace(_name, this.app.locals.aliases[_name]);
+		// };
 	},
 
 	setLocals() {

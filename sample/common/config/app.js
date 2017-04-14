@@ -15,6 +15,6 @@
 
 module.exports = {
 	env: 'development',
-	jsonServer: path.join('@common', 'db'),
+	jsonServer: '@common/db',
 	static: 'dist',
 };

@@ -9,7 +9,6 @@
 module.exports = {
 
 	index(req, res, next) {
-		console.dir(req.app.locals);
 		res.render('home', {
 			title: 'foo home',
 		});
