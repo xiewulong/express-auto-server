@@ -27,25 +27,24 @@ const defaultConfig = {
 	views: 'views',
 };
 
-const application = function(config) {
+const Application = function(config) {
 	if(!config.path || !config.port) {
 		console.error('path or port is undefined');
 		return;
 	}
 
 	this.app = express();
-	this.config = Object.assign(defaultConfig, config);
+	this.config = Object.assign({}, defaultConfig, config);
 
 	this.init();
 };
 
-application.prototype = {
+Application.prototype = {
 
 	init() {
-		this.setAliases();
+		this.settings();
+		this.setAlias();
 		this.setLocals();
-		this.setViews();
-		this.setJsonSpaces();
 		this.useLogger();
 		this.useBodyParser();
 		this.useCookie();
@@ -56,24 +55,29 @@ application.prototype = {
 		this.listen();
 	},
 
-	setAliases() {
+	settings() {
+		this.app.set('env', this.config.env);
+
+		// this.app.set('case sensitive routing', false);
+		// this.app.set('strict routing', false);
+
+		// this.app.set('jsonp callback name', '?callback=');
+		// this.app.set('json replacer', null);
+		this.app.set('json spaces', this.config.jsonSpaces);
+
+		// this.app.set('etag', true);
+		// this.app.set('query parser', 'extended');	// 'simple' or 'extended'
+		// this.app.set('subdomain offset', 2);
+		// this.app.set('trust proxy', false);
+		this.app.set('views', path.join(this.config.path, this.config.views));
+		// this.app.set('view cache', false);	// true in production
+		this.app.set('view engine', this.config.engine);
+
+		this.app.set('x-powered-by', false);
+	},
+
+	setAlias() {
 		this.app.alias = peppa.alias();
-		// this.app.locals.aliases = {};
-		// this.app.alias = (name, _path) => {
-		// 	if(_path) {
-		// 		this.app.locals.aliases[name] = _path;
-		// 		return;
-		// 	}
-
-		// 	if(name.indexOf('@')) {
-		// 		return name;
-		// 	}
-
-		// 	let sepPos = name.indexOf(path.sep);
-		// 	let _name = sepPos == -1 ? name : name.slice(0, sepPos);
-
-		// 	return name.replace(_name, this.app.locals.aliases[_name]);
-		// };
 	},
 
 	setLocals() {
@@ -82,20 +86,11 @@ application.prototype = {
 			this.app.alias('@common', this.config.common);
 		}
 
-		this.app.locals.minAsset = this.config.env === 'production' ? '.min' : '';
-	},
-
-	setViews() {
-		this.app.set('views', path.join(this.config.path, this.config.views));
-		this.app.set('view engine', this.config.engine);
-	},
-
-	setJsonSpaces() {
-		this.app.set('json spaces', this.config.jsonSpaces);
+		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
 	},
 
 	useLogger() {
-		if(this.config.env === 'production') {
+		if(this.app.get('env') === 'production') {
 			return;
 		}
 
@@ -113,7 +108,16 @@ application.prototype = {
 
 	useStatic() {
 		if(this.config.static) {
-			this.app.use(express.static(path.join(this.config.path, this.config.static)));
+			this.app.use(express.static(path.join(this.config.path, this.config.static), this.config.staticOptions || {
+				// dotfiles: 'ignore',
+				// etag: true,
+				// extensions: false,
+				// index: 'index.html',
+				// lastModified: true,
+				// maxAge: 0,
+				// redirect: true,
+				// setHeaders: '',
+			}));
 			return;
 		}
 		if(this.config.favicon) {
@@ -180,7 +184,7 @@ application.prototype = {
 		// all errors
 		this.app.use((err, req, res, next) => {
 			res.locals.message = err.message;
-			res.locals.error = this.config.env === 'production' ? {} : err;
+			res.locals.error = this.app.get('env') === 'production' ? {} : err;
 
 			res.status(err.status || 500);
 			this.config.errorView ? res.render(this.config.errorView) : res.send(res.locals.message);
@@ -196,5 +200,5 @@ application.prototype = {
 };
 
 module.exports = function(config) {
-	return new application(config);
+	return new Application(config);
 };

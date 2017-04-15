@@ -6,8 +6,6 @@
  */
 'use strict';
 
-const path = require('path');
-
 module.exports = {
 	env: 'development',
 	jsonServer: '@common/db',

@@ -7,5 +7,6 @@
 'use strict';
 
 module.exports = Object.assign(
-	require('./app')
+	{}
+	, require('./app')
 );
