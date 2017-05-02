@@ -4,7 +4,8 @@
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
-    "test": "node ./sample/apps/foo"
+    "test": "node ./sample/apps/foo",
+    "test:init": "peppa init envs sample"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,7 @@
     "faker": "^4.1.0",
     "json-server": "^0.9.6",
     "morgan": "^1.8.1",
-    "peppa": "^0.0.2",
+    "peppa": "^0.0.5",
     "pug": "^2.0.0-beta11",
     "serve-favicon": "^2.4.2"
   }

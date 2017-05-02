@@ -6,11 +6,7 @@
  */
 'use strict';
 
-// module.exports = Object.assign(
-// 	{}
-// 	, require('./app.local')
-// );
-
-module.exports = {
-	port: 30001,
-};
+module.exports = Object.assign(
+	{}
+	, require('./app.local')
+);
