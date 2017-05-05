@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node ./sample/apps/foo",
-    "test:init": "peppa init envs sample"
+    "init": "peppa init envs sample"
   },
   "repository": {
     "type": "git",
