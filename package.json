@@ -29,12 +29,12 @@
     "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
-    "express-auto-controller": "^0.0.2",
+    "express-auto-controller": "^0.0.4",
     "faker": "^4.1.0",
-    "json-server": "^0.9.6",
+    "json-server": "^0.10.0",
     "morgan": "^1.8.1",
     "peppa": "^0.0.5",
-    "pug": "^2.0.0-beta11",
+    "pug": "^2.0.0-rc.1",
     "serve-favicon": "^2.4.2"
   }
 }
