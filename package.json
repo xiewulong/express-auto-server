@@ -36,5 +36,8 @@
     "peppa": "^0.0.5",
     "pug": "^2.0.0-rc.1",
     "serve-favicon": "^2.4.2"
+  },
+  "devDependencies": {
+    "jquery": "^3.2.1"
   }
 }
