@@ -27,19 +27,19 @@ const defaultConfig = {
 	views: 'views',
 };
 
-const Application = function(config) {
-	if(!config.path || !config.port) {
-		console.error('path or port is undefined');
-		return;
+class Application {
+
+	constructor(config) {
+		if(!config.path || !config.port) {
+			console.error('path or port is undefined');
+			return;
+		}
+
+		this.app = express();
+		this.config = Object.assign({}, defaultConfig, config);
+
+		this.init();
 	}
-
-	this.app = express();
-	this.config = Object.assign({}, defaultConfig, config);
-
-	this.init();
-};
-
-Application.prototype = {
 
 	init() {
 		this.settings();
@@ -53,7 +53,7 @@ Application.prototype = {
 		this.setController();
 		this.errorHandler();
 		this.listen();
-	},
+	}
 
 	settings() {
 		this.app.set('env', this.config.env);
@@ -74,11 +74,11 @@ Application.prototype = {
 		this.app.set('view engine', this.config.engine);
 
 		this.app.set('x-powered-by', false);
-	},
+	}
 
 	setAlias() {
 		this.app.alias = peppa.alias();
-	},
+	}
 
 	setLocals() {
 		this.app.alias('@app', this.config.path);
@@ -87,7 +87,7 @@ Application.prototype = {
 		}
 
 		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
-	},
+	}
 
 	useLogger() {
 		if(this.app.get('env') === 'production') {
@@ -95,16 +95,16 @@ Application.prototype = {
 		}
 
 		this.app.use(logger('dev'));
-	},
+	}
 
 	useBodyParser() {
 		this.app.use(bodyParser.json());
 		this.app.use(bodyParser.urlencoded({extended: false}));
-	},
+	}
 
 	useCookie() {
 		this.app.use(cookieParser());
-	},
+	}
 
 	useStatic() {
 		if(this.config.static) {
@@ -124,7 +124,7 @@ Application.prototype = {
 			this.app.use(favicon(path.join(this.config.path, this.config.favicon)));
 			return;
 		}
-	},
+	}
 
 	useJsonServer() {
 		if(!this.config.jsonServer) {
@@ -165,11 +165,11 @@ Application.prototype = {
 		}
 
 		this.app.use(db.route, jsonServer.router(tables));
-	},
+	}
 
 	setController() {
 		this.app.autoController(path.join(this.config.path, this.config.controllers));
-	},
+	}
 
 	errorHandler() {
 
@@ -190,14 +190,14 @@ Application.prototype = {
 			this.config.errorView ? res.render(this.config.errorView) : res.send(res.locals.message);
 		});
 
-	},
+	}
 
 	listen() {
 		this.server = http.createServer(this.app);
 		this.server.listen(this.config.port);
-	},
+	}
 
-};
+}
 
 module.exports = function(config) {
 	return new Application(config);
