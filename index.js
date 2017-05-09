@@ -51,6 +51,7 @@ class Application {
 		this.useCookie();
 		this.useStatic();
 		this.useJsonServer();
+		this.useAssets();
 		this.setController();
 		this.errorHandler();
 		this.listen();
@@ -79,14 +80,14 @@ class Application {
 
 	setAlias() {
 		this.app.alias = peppa.alias();
-	}
-
-	setLocals() {
+		this.app.alias('@npm', path.join(__dirname, 'node_modules'));
 		this.app.alias('@app', this.config.path);
 		if(this.config.common) {
 			this.app.alias('@common', this.config.common);
 		}
+	}
 
+	setLocals() {
 		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
 	}
 
@@ -109,7 +110,8 @@ class Application {
 
 	useStatic() {
 		if(this.config.static) {
-			this.app.use(express.static(path.join(this.config.path, this.config.static), this.config.staticOptions || {
+			this.app.alias('@static', path.join(this.config.path, this.config.static));
+			this.app.use(express.static(this.app.alias('@static'), this.config.staticOptions || {
 				// dotfiles: 'ignore',
 				// etag: true,
 				// extensions: false,
@@ -119,11 +121,11 @@ class Application {
 				// redirect: true,
 				// setHeaders: '',
 			}));
+
 			return;
 		}
 		if(this.config.favicon) {
 			this.app.use(favicon(path.join(this.config.path, this.config.favicon)));
-			return;
 		}
 	}
 
@@ -166,6 +168,18 @@ class Application {
 		}
 
 		this.app.use(db.route, jsonServer.router(tables));
+	}
+
+	useAssets() {
+		this.app.use((req, res, next) => {
+			res.locals.assets = {
+				beforeHeadEnd() {
+					return '<!--[if IE 8]>123<![endif]-->';
+				},
+			};
+
+			next();
+		});
 	}
 
 	setController() {
