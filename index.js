@@ -171,15 +171,6 @@ class Application {
 	}
 
 	useAssets() {
-		this.app.use((req, res, next) => {
-			res.locals.assets = {
-				beforeHeadEnd() {
-					return '<!--[if IE 8]>123<![endif]-->';
-				},
-			};
-
-			next();
-		});
 	}
 
 	setController() {
