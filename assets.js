@@ -25,6 +25,8 @@ class Assets {
 
 		this.app = app;
 		this.options = Object.assign(defaultOptions, options);
+
+		return this.app;
 	}
 
 }

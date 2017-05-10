@@ -12,13 +12,13 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const express = require('express');
+const autoAssets = require('./assets');
+const autoController = require('express-auto-controller');
 const jsonServer = require('json-server');
 const logger = require('morgan');
 const peppa = require('peppa');
 const favicon = require('serve-favicon');
-const express = require('express');
-const autoAssets = require('./assets');
-const autoController = require('express-auto-controller');
 
 const defaultConfig = {
 	controllers: 'controllers',
