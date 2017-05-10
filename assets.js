@@ -8,18 +8,31 @@
 
 const fs = require('fs');
 const path = require('path');
+
 const express = require('express');
+
+const defaultOptions = {
+
+};
 
 class Assets {
 
 	constructor(app, options = {}) {
+		if(!app) {
+			console.error('app is required');
+			return;
+		}
 
+		this.app = app;
+		this.options = Object.assign(defaultOptions, options);
 	}
 
 }
 
 express.application.autoAssets = function(options = {}) {
-	new Assets(this, options);
+	return new Assets(this, options);
 };
 
-module.exports = Assets;
+module.exports = (app) => {
+	return new Assets(app, options);
+};

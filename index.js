@@ -17,6 +17,7 @@ const logger = require('morgan');
 const peppa = require('peppa');
 const favicon = require('serve-favicon');
 const express = require('express');
+const autoAssets = require('./assets');
 const autoController = require('express-auto-controller');
 
 const defaultConfig = {
@@ -43,9 +44,9 @@ class Application {
 	}
 
 	init() {
-		this.settings();
 		this.setAlias();
 		this.setLocals();
+		this.settings();
 		this.useLogger();
 		this.useBodyParser();
 		this.useCookie();
@@ -55,6 +56,20 @@ class Application {
 		this.setController();
 		this.errorHandler();
 		this.listen();
+	}
+
+	setAlias() {
+		this.app.alias = peppa.alias();
+		this.app.alias('@basePath', __dirname);
+		this.app.alias('@npm', this.app.alias('@basePath/node_modules'));
+		this.app.alias('@app', this.config.path);
+		if(this.config.common) {
+			this.app.alias('@common', this.config.common);
+		}
+	}
+
+	setLocals() {
+		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
 	}
 
 	settings() {
@@ -71,24 +86,11 @@ class Application {
 		// this.app.set('query parser', 'extended');	// 'simple' or 'extended'
 		// this.app.set('subdomain offset', 2);
 		// this.app.set('trust proxy', false);
-		this.app.set('views', path.join(this.config.path, this.config.views));
+		this.app.set('views', this.app.alias(`@app/${this.config.views}`));
 		// this.app.set('view cache', false);	// true in production
 		this.app.set('view engine', this.config.engine);
 
 		this.app.set('x-powered-by', false);
-	}
-
-	setAlias() {
-		this.app.alias = peppa.alias();
-		this.app.alias('@npm', path.join(__dirname, 'node_modules'));
-		this.app.alias('@app', this.config.path);
-		if(this.config.common) {
-			this.app.alias('@common', this.config.common);
-		}
-	}
-
-	setLocals() {
-		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
 	}
 
 	useLogger() {
@@ -110,7 +112,7 @@ class Application {
 
 	useStatic() {
 		if(this.config.static) {
-			this.app.alias('@static', path.join(this.config.path, this.config.static));
+			this.app.alias('@static', this.app.alias(`@app/${this.config.static}`));
 			this.app.use(express.static(this.app.alias('@static'), this.config.staticOptions || {
 				// dotfiles: 'ignore',
 				// etag: true,
@@ -125,7 +127,7 @@ class Application {
 			return;
 		}
 		if(this.config.favicon) {
-			this.app.use(favicon(path.join(this.config.path, this.config.favicon)));
+			this.app.use(favicon(this.app.alias(`@app/${this.config.favicon}`)));
 		}
 	}
 
@@ -135,7 +137,7 @@ class Application {
 		}
 
 		if(this.config.jsonServer === true) {
-			this.config.jsonServer = path.join('@app', 'db');
+			this.config.jsonServer = '@app/db';
 		}
 
 		let dbPath = this.app.alias(this.config.jsonServer);
@@ -159,7 +161,7 @@ class Application {
 				db.json = 'db.json';
 			}
 
-			let jsonPath = path.join(dbPath, db.json);
+			let jsonPath = `${dbPath}/${db.json}`;
 			if(!fs.existsSync(jsonPath)) {
 				fs.writeFileSync(jsonPath, JSON.stringify(tables));
 			}
@@ -171,10 +173,14 @@ class Application {
 	}
 
 	useAssets() {
+		this.app.autoAssets(this.config.assets);
 	}
 
 	setController() {
-		this.app.autoController(path.join(this.config.path, this.config.controllers));
+		this.app.autoController(
+			this.app.alias(`@app/${this.config.controllers.dir || this.config.controllers}`)
+			, typeof this.config.controllers == 'string' ? {} : this.config.controllers
+		);
 	}
 
 	errorHandler() {
