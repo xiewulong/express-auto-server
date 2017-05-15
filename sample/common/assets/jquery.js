@@ -7,8 +7,9 @@
 'use strict';
 
 module.exports = {
-	name: 'jquery',
-	production: true,
 	sourcePath: '@npm/jquery/dist',
-	js: true,
+	js: [
+		'jquery',
+	],
+	// production: true,
 };

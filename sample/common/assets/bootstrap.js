@@ -1,23 +1,21 @@
 /*!
- * common asset
+ * bootstrap asset
  * xiewulong <xiewulong@vip.qq.com>
- * create: 2017/05/08
+ * create: 2017/05/15
  * since: 0.0.1
  */
 'use strict';
 
 module.exports = {
-	// basePath: '@webroot',
-	// baseUrl: '@web',
+	sourcePath: '@npm/bootstrap/dist',
 	css: [
-		'css/common',
+		'bootstrap',
 	],
 	js: [
-		'js/common.js',
+		'bootstrap',
 	],
 	depends: [
 		'@common/assets/jquery',
-		'@common/assets/bootstrap',
 	],
 	// production: true,
 };

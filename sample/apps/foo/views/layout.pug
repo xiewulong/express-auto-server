@@ -1,5 +1,6 @@
 doctype html
 html(lang="zh-cn", xml:lang="zh-cn")
+	!= assets.use('@app/assets/common')
 	head
 		title #{title}
 		meta(charset="utf-8")
@@ -13,7 +14,8 @@ html(lang="zh-cn", xml:lang="zh-cn")
 		meta(name="apple-touch-fullscreen", content="yes")
 		meta(name="format-detection", content="telephone=no,email=no")
 		link(rel="stylesheet", type="text/css", href=`/css/common.css`)
-		//- != locals.assets.beforeHeadEnd()
+		!= assets.endHead
 	body
 		block content
 		script(type="text/javascript", src=`/js/common.js`)
+		!= assets.endBody

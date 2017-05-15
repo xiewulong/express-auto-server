@@ -112,8 +112,9 @@ class Application {
 
 	useStatic() {
 		if(this.config.static) {
-			this.app.alias('@static', this.app.alias(`@app/${this.config.static}`));
-			this.app.use(express.static(this.app.alias('@static'), this.config.staticOptions || {
+			let options = typeof this.config.static == 'string' ? {
+				root: this.config.static,
+				// path: '/',
 				// dotfiles: 'ignore',
 				// etag: true,
 				// extensions: false,
@@ -122,7 +123,22 @@ class Application {
 				// maxAge: 0,
 				// redirect: true,
 				// setHeaders: '',
-			}));
+			} : this.config.static;
+
+			if(!options.root) {
+				console.error('static root is undefined.');
+				return;
+			}
+
+			let root = options.root;
+			let path = options.path || '/';
+
+			delete options.root;
+			delete options.path;
+
+			this.app.alias('@static', this.app.alias(`@app/${root}`));
+			this.app.alias('@web', path);
+			this.app.use(path, express.static(this.app.alias('@static'), options));
 
 			return;
 		}
