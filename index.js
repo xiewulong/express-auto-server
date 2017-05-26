@@ -13,7 +13,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const autoAssets = require('./assets');
+const autoAsset = require('express-auto-asset');
 const autoController = require('express-auto-controller');
 const jsonServer = require('json-server');
 const logger = require('morgan');
@@ -52,7 +52,7 @@ class Application {
 		this.useCookie();
 		this.useStatic();
 		this.useJsonServer();
-		this.useAssets();
+		this.useAsset();
 		this.setController();
 		this.errorHandler();
 		this.listen();
@@ -66,10 +66,6 @@ class Application {
 		if(this.config.common) {
 			this.app.alias('@common', this.config.common);
 		}
-	}
-
-	setLocals() {
-		this.app.locals.minAsset = this.app.get('env') === 'production' ? '.min' : '';
 	}
 
 	settings() {
@@ -188,8 +184,8 @@ class Application {
 		this.app.use(db.route, jsonServer.router(tables));
 	}
 
-	useAssets() {
-		this.app.autoAssets(this.config.assets);
+	useAsset() {
+		this.app.autoAsset(this.config.asset);
 	}
 
 	setController() {
