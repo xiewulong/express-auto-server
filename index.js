@@ -45,7 +45,6 @@ class Application {
 
 	init() {
 		this.setAlias();
-		this.setLocals();
 		this.settings();
 		this.useLogger();
 		this.useBodyParser();
