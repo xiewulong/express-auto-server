@@ -1,9 +1,11 @@
 {
   "name": "express-auto-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
+    "init": "peppa init envs sample",
+	"preinstall": "rm -rf ./sample/apps/foo/dist/assets",
     "test": "node ./sample/apps/foo"
   },
   "repository": {
@@ -15,10 +17,7 @@
     "auto",
     "server"
   ],
-  "author": {
-    "name": "xiewulong",
-    "email": "xiewulong@vip.qq.com"
-  },
+  "author": "xiewulong <xiewulong@vip.qq.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/xiewulong/express-auto-server/issues"
@@ -28,9 +27,17 @@
     "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
-    "express-auto-controller": "^0.0.2",
+    "express-auto-asset": "^0.0.2",
+    "express-auto-controller": "^0.0.4",
+    "json-server": "^0.10.0",
     "morgan": "^1.8.1",
-    "pug": "^2.0.0-beta11",
+    "peppa": "^0.0.6",
+    "pug": "^2.0.0-rc.1",
     "serve-favicon": "^2.4.2"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "faker": "^4.1.0",
+    "jquery": "^3.2.1"
   }
 }

@@ -6,11 +6,9 @@
  */
 'use strict';
 
-// module.exports = Object.assign({
-// 	static: 'dist',
-// }, require('./app.local'));
-
-module.exports = {
-	env: 'development',
-	static: 'dist',
-};
+module.exports = Object.assign(
+	{
+		static: 'dist',
+	}
+	, require('./app.local')
+);
