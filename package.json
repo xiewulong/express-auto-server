@@ -1,12 +1,12 @@
 {
   "name": "express-auto-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
-    "test": "node ./sample/apps/foo",
     "init": "peppa init envs sample",
-	"preinstall": "rm -rf ./sample/apps/foo/dist/assets"
+	"preinstall": "rm -rf ./sample/apps/foo/dist/assets",
+    "test": "node ./sample/apps/foo"
   },
   "repository": {
     "type": "git",
