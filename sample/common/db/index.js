@@ -11,6 +11,7 @@ const user = require('./user');
 
 module.exports = {
 	json: true,
+	// route: '/api',
 	routes: {
 		'/good': '/product',
 	},

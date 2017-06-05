@@ -166,7 +166,7 @@ class Application {
 			dbPath = path.dirname(dbPath);
 		}
 
-		let tables = db.tables;
+		let tables = db.tables || {};
 		if(db.json) {
 			if(db.json === true) {
 				db.json = 'db.json';
@@ -184,6 +184,10 @@ class Application {
 	}
 
 	useAsset() {
+		if(this.config.asset === false) {
+			return;
+		}
+
 		this.app.autoAsset(this.config.asset);
 	}
 
