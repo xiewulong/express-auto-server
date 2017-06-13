@@ -32,8 +32,8 @@ const defaultConfig = {
 class Application {
 
 	constructor(config) {
-		if(!config.path || !config.port) {
-			console.error('path or port is undefined');
+		if(!config.basePath || !config.path || !config.port) {
+			console.error('basePath, path or port is required.');
 			return;
 		}
 
@@ -59,7 +59,7 @@ class Application {
 
 	setAlias() {
 		this.app.alias = peppa.alias();
-		this.app.alias('@basePath', __dirname);
+		this.app.alias('@basePath', this.config.basePath);
 		this.app.alias('@npm', this.app.alias('@basePath/node_modules'));
 		this.app.alias('@app', this.config.path);
 		if(this.config.common) {
