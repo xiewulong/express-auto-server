@@ -6,9 +6,12 @@
  */
 'use strict';
 
+const path = require('path');
+
 const expressAutoServer = require('../../../');
 
 let config = Object.assign(require('../../common/config'), require('./config'));
 config.path = __dirname;
+config.basePath = path.join(config.path, '..', '..', '..');
 
 expressAutoServer(config);

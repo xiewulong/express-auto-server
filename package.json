@@ -1,6 +1,6 @@
 {
   "name": "express-auto-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
