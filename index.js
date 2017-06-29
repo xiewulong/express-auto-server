@@ -151,6 +151,8 @@ class Application {
 			this.config.jsonServer = '@app/db';
 		}
 
+		this.app.jsonServer(this.app.alias(this.config.jsonServer));
+
 		let dbPath = this.app.alias(this.config.jsonServer);
 		let db = require(dbPath);
 		if(!db.route) {

@@ -6,17 +6,15 @@
  */
 'use strict';
 
-const product = require('./product');
-const user = require('./user');
-
 module.exports = {
 	json: true,
 	// route: '/api',
 	routes: {
 		'/good': '/product',
+		'/member': '/user',
 	},
 	tables: {
-		product,
-		user,
+		product: require('./product'),
+		user: require('./user'),
 	},
 };

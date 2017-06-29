@@ -8,13 +8,13 @@
 
 const faker = require('faker/locale/zh_CN');
 
-let rows = [];
+let items = [];
 for(let i = 0, len = 100; i < len; i++) {
-	rows.push({
+	items.push({
 		id: i + 1,
 		name: faker.commerce.productName(),
 		price: faker.commerce.price(),
 	});
 }
 
-module.exports = rows;
+module.exports = items;

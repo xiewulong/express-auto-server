@@ -8,13 +8,13 @@
 
 const faker = require('faker/locale/zh_CN');
 
-let rows = [];
+let items = [];
 for(let i = 0, len = 10; i < len; i++) {
-	rows.push({
+	items.push({
 		id: i + 1,
 		name: faker.internet.userName(),
 		email: faker.internet.email(),
 	});
 }
 
-module.exports = rows;
+module.exports = items;
