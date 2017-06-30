@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const autoAsset = require('express-auto-asset');
 const autoController = require('express-auto-controller');
-const jsonServer = require('json-server');
+const jsonServer = require('express-json-server');
 const logger = require('morgan');
 const peppa = require('peppa');
 const favicon = require('serve-favicon');
@@ -153,36 +153,36 @@ class Application {
 
 		this.app.jsonServer(this.app.alias(this.config.jsonServer));
 
-		let dbPath = this.app.alias(this.config.jsonServer);
-		let db = require(dbPath);
-		if(!db.route) {
-			db.route = '/api';
-		}
+		// let dbPath = this.app.alias(this.config.jsonServer);
+		// let db = require(dbPath);
+		// if(!db.route) {
+		// 	db.route = '/api';
+		// }
 
-		if(db.routes) {
-			this.app.use(db.route, jsonServer.rewriter(db.routes));
-		}
+		// if(db.routes) {
+		// 	this.app.use(db.route, jsonServer.rewriter(db.routes));
+		// }
 
-		let dbStat = fs.statSync(dbPath);
-		if(!dbStat.isDirectory()) {
-			dbPath = path.dirname(dbPath);
-		}
+		// let dbStat = fs.statSync(dbPath);
+		// if(!dbStat.isDirectory()) {
+		// 	dbPath = path.dirname(dbPath);
+		// }
 
-		let tables = db.tables || {};
-		if(db.json) {
-			if(db.json === true) {
-				db.json = 'db.json';
-			}
+		// let tables = db.tables || {};
+		// if(db.json) {
+		// 	if(db.json === true) {
+		// 		db.json = 'db.json';
+		// 	}
 
-			let jsonPath = `${dbPath}/${db.json}`;
-			if(!fs.existsSync(jsonPath)) {
-				fs.writeFileSync(jsonPath, JSON.stringify(tables));
-			}
+		// 	let jsonPath = `${dbPath}/${db.json}`;
+		// 	if(!fs.existsSync(jsonPath)) {
+		// 		fs.writeFileSync(jsonPath, JSON.stringify(tables));
+		// 	}
 
-			tables = jsonPath;
-		}
+		// 	tables = jsonPath;
+		// }
 
-		this.app.use(db.route, jsonServer.router(tables));
+		// this.app.use(db.route, jsonServer.router(tables));
 	}
 
 	useAsset() {

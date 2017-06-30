@@ -7,7 +7,15 @@
 'use strict';
 
 module.exports = {
-	json: true,
+	delay: 500,
+	// foreignKeySuffix: 'Id',
+	// id: 'id',
+	json: 'db.json',
+	// jsonSpaces: 2,
+	// middlewares: [],
+	// noCors: false,
+	// noGzip: false,
+	// readOnly: false,
 	// route: '/api',
 	routes: {
 		'/good': '/product',
