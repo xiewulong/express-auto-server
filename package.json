@@ -1,6 +1,6 @@
 {
   "name": "express-auto-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "express auto server",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "express-auto-controller": "^0.0.4",
     "json-server": "^0.10.0",
     "morgan": "^1.8.1",
-    "peppa": "^0.0.6",
+    "peppa": "^0.0.7",
     "pug": "^2.0.0-rc.1",
     "serve-favicon": "^2.4.2"
   },
